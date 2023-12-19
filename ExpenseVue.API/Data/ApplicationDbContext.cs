@@ -8,6 +8,6 @@ namespace ExpenseVue.API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<DbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     }
 }
