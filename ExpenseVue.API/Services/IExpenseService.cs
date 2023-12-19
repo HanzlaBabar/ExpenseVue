@@ -1,13 +1,13 @@
-using ExpenseVue.API.Data;
+using ExpenseVue.API.Models;
 
 namespace ExpenseVue.API.Services
 {
     public interface IExpenseService
     {
-        Task<List<Expense>> GetExpensesAsync();
-        Task<Expense> GetExpenseAsync(int id);
-        Task<Expense> AddExpenseAsync(Expense expense);
-        Task<Expense> UpdateExpenseAsync(Expense expense);
+        Task<List<ExpenseModel>> GetExpensesAsync();
+        Task<ExpenseModel> GetExpenseAsync(int id);
+        Task<ExpenseModel> AddExpenseAsync(ExpenseModel expense);
+        Task<ExpenseModel> UpdateExpenseAsync(ExpenseModel expense);
         Task DeleteExpenseAsync(int id);
     }
 }
