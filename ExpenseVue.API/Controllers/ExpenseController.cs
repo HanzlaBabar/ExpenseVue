@@ -1,6 +1,7 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ExpenseVue.API.Controllers
 {
@@ -15,6 +16,10 @@ namespace ExpenseVue.API.Controllers
             _expenseService = expenseService;
         }
 
+        /// <summary>
+        /// Gets a list of expenses
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<ExpenseModel>>> GetExpensesAsync()
         {
@@ -22,6 +27,11 @@ namespace ExpenseVue.API.Controllers
             return Ok(expenses);
         }
 
+        /// <summary>
+        /// Gets a single expense
+        /// </summary>
+        /// <param name="id">The ID of the expense to get</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ExpenseModel>> GetExpenseAsync(int id)
         {
@@ -29,6 +39,11 @@ namespace ExpenseVue.API.Controllers
             return Ok(expense);
         }
 
+        /// <summary>
+        /// Adds a new expense
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ExpenseModel>> AddExpenseAsync(ExpenseModel expense)
         {
@@ -36,6 +51,11 @@ namespace ExpenseVue.API.Controllers
             return Ok(addedExpense);
         }
 
+        /// <summary>
+        /// Updates an existing expense
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<ExpenseModel>> UpdateExpenseAsync(ExpenseModel expense)
         {
@@ -43,6 +63,11 @@ namespace ExpenseVue.API.Controllers
             return Ok(updatedExpense);
         }
 
+        /// <summary>
+        /// Deletes an existing expense
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteExpenseAsync(int id)
         {
