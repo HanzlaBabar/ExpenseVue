@@ -1,16 +1,22 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace ExpenseVue.API.Controllers
 {
+    /// <summary>
+    /// Expense Controller
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _expenseService;
-        
+
+         /// <summary>
+         /// Constructor
+         /// </summary>
+         /// <param name="expenseService"></param>
         public ExpenseController(IExpenseService expenseService)
         {
             _expenseService = expenseService;
