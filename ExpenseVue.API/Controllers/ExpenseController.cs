@@ -1,6 +1,7 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ExpenseVue.API.Controllers
 {
@@ -12,14 +13,17 @@ namespace ExpenseVue.API.Controllers
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _expenseService;
+        private readonly ILogger<ExpenseController> _logger;
 
-         /// <summary>
-         /// Constructor
-         /// </summary>
-         /// <param name="expenseService"></param>
-        public ExpenseController(IExpenseService expenseService)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="expenseService"></param>
+        /// <param name="logger"></param>
+        public ExpenseController(IExpenseService expenseService, ILogger<ExpenseController> logger)
         {
             _expenseService = expenseService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -29,8 +33,17 @@ namespace ExpenseVue.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ExpenseModel>>> GetExpensesAsync()
         {
-            var expenses = await _expenseService.GetExpensesAsync();
-            return Ok(expenses);
+            try
+            {
+                _logger.LogInformation("Getting list of expenses");
+                var expenses = await _expenseService.GetExpensesAsync();
+                return Ok(expenses);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting the list of expenses");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         /// <summary>
@@ -41,8 +54,17 @@ namespace ExpenseVue.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ExpenseModel>> GetExpenseAsync(int id)
         {
-            var expense = await _expenseService.GetExpenseAsync(id);
-            return Ok(expense);
+            try
+            {
+                _logger.LogInformation($"Getting expense with ID {id}");
+                var expense = await _expenseService.GetExpenseAsync(id);
+                return Ok(expense);
+            }       
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting expense with ID {id}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         /// <summary>
@@ -53,8 +75,17 @@ namespace ExpenseVue.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ExpenseModel>> AddExpenseAsync(ExpenseModel expense)
         {
-            var addedExpense = await _expenseService.AddExpenseAsync(expense);
-            return Ok(addedExpense);
+            try
+            {
+                _logger.LogInformation("Adding a new expense");
+                var addedExpense = await _expenseService.AddExpenseAsync(expense);
+                return Ok(addedExpense);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding a new expense");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         /// <summary>
@@ -65,8 +96,17 @@ namespace ExpenseVue.API.Controllers
         [HttpPut]
         public async Task<ActionResult<ExpenseModel>> UpdateExpenseAsync(ExpenseModel expense)
         {
-            var updatedExpense = await _expenseService.UpdateExpenseAsync(expense);
-            return Ok(updatedExpense);
+            try
+            {
+                _logger.LogInformation($"Updating expense with ID {expense.Id}");
+                var updatedExpense = await _expenseService.UpdateExpenseAsync(expense);
+                return Ok(updatedExpense);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating expense with ID {expense.Id}");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         /// <summary>
@@ -77,8 +117,17 @@ namespace ExpenseVue.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteExpenseAsync(int id)
         {
-            await _expenseService.DeleteExpenseAsync(id);
-            return Ok();
+            try
+            {
+                _logger.LogInformation($"Deleting expense with ID {id}");
+                await _expenseService.DeleteExpenseAsync(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting expense with ID {id}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }
