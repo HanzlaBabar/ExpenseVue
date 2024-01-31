@@ -1,7 +1,6 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ExpenseVue.API.Controllers
 {
