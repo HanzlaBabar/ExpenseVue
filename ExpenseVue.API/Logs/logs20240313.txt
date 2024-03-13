@@ -1,0 +1,28 @@
+2024-03-13 14:05:55.025 +00:00 [WRN] The WebRootPath was not found: D:\Personal\ExpenseVue\ExpenseVue.API\wwwroot. Static files may be unavailable.
+2024-03-13 14:05:55.607 +00:00 [INF] Now listening on: https://localhost:7038
+2024-03-13 14:05:55.608 +00:00 [INF] Now listening on: http://localhost:5251
+2024-03-13 14:05:55.612 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-13 14:05:55.612 +00:00 [INF] Hosting environment: Development
+2024-03-13 14:05:55.613 +00:00 [INF] Content root path: D:\Personal\ExpenseVue\ExpenseVue.API
+2024-03-13 14:05:56.124 +00:00 [INF] Request starting HTTP/1.1 GET https://localhost:7038/swagger/index.html - null null
+2024-03-13 14:05:56.477 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/swagger/index.html - 200 null text/html;charset=utf-8 354.2104ms
+2024-03-13 14:05:56.607 +00:00 [INF] Request starting HTTP/1.1 GET https://localhost:7038/swagger/v1/swagger.json - null null
+2024-03-13 14:05:56.719 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 111.877ms
+2024-03-13 14:06:15.789 +00:00 [INF] Request starting HTTP/1.1 GET https://localhost:7038/api/Expense/100 - null null
+2024-03-13 14:06:15.813 +00:00 [INF] Executing endpoint 'ExpenseVue.API.Controllers.ExpenseController.GetExpenseAsync (ExpenseVue.API)'
+2024-03-13 14:06:15.837 +00:00 [INF] Route matched with {action = "GetExpense", controller = "Expense"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[ExpenseVue.API.Models.ExpenseModel]] GetExpenseAsync(Int32) on controller ExpenseVue.API.Controllers.ExpenseController (ExpenseVue.API).
+2024-03-13 14:06:16.400 +00:00 [INF] Getting expense with ID 100
+2024-03-13 14:06:18.056 +00:00 [INF] Executed DbCommand (22ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "e"."Id", "e"."Amount", "e"."CategoryId", "e"."CurrencyId", "e"."Date", "e"."Description", "e"."Vendor"
+FROM "Expenses" AS "e"
+WHERE "e"."Id" = @__p_0
+LIMIT 1
+2024-03-13 14:06:18.203 +00:00 [ERR] An error occurred while getting expense with ID 100
+System.Exception: Expense not found.
+   at ExpenseVue.API.Repositories.ExpenseRepository.GetExpenseAsync(Int32 id) in d:\Personal\ExpenseVue\ExpenseVue.API\Repositories\ExpenseRepository.cs:line 22
+   at ExpenseVue.API.Services.ExpenseService.GetExpenseAsync(Int32 id) in d:\Personal\ExpenseVue\ExpenseVue.API\Services\ExpenseService.cs:line 33
+   at ExpenseVue.API.Controllers.ExpenseController.GetExpenseAsync(Int32 id) in d:\Personal\ExpenseVue\ExpenseVue.API\Controllers\ExpenseController.cs:line 59
+2024-03-13 14:06:18.346 +00:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2024-03-13 14:06:18.352 +00:00 [INF] Executed action ExpenseVue.API.Controllers.ExpenseController.GetExpenseAsync (ExpenseVue.API) in 2510.0101ms
+2024-03-13 14:06:18.353 +00:00 [INF] Executed endpoint 'ExpenseVue.API.Controllers.ExpenseController.GetExpenseAsync (ExpenseVue.API)'
+2024-03-13 14:06:18.363 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/api/Expense/100 - 500 null text/plain; charset=utf-8 2573.3205ms
