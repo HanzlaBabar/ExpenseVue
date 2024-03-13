@@ -13,9 +13,9 @@ namespace ExpenseVue.API.Services
             _expenseRepository = expenseRepository;
         }
 
-        public async Task<List<ExpenseModel>> GetExpensesAsync()
+        public async Task<List<ExpenseModel>> GetExpensesAsync(string userId)
         {
-            var expenses = await _expenseRepository.GetExpensesAsync();
+            var expenses = await _expenseRepository.GetExpensesAsync(userId);
             return expenses.Select(e => new ExpenseModel
             {
                 Id = e.Id,
@@ -28,9 +28,9 @@ namespace ExpenseVue.API.Services
             }).ToList();
         }
 
-        public async Task<ExpenseModel> GetExpenseAsync(int id)
+        public async Task<ExpenseModel> GetExpenseAsync(string userId, int id)
         {
-            var expense =  await _expenseRepository.GetExpenseAsync(id);
+            var expense =  await _expenseRepository.GetExpenseAsync(userId, id);
 
             return new ExpenseModel
             {
@@ -44,7 +44,7 @@ namespace ExpenseVue.API.Services
             };
         }
 
-        public async Task<ExpenseModel> AddExpenseAsync(ExpenseModel expense)
+        public async Task<ExpenseModel> AddExpenseAsync(string userId, ExpenseModel expense)
         {
             var expenseData = new Expense
             {
@@ -54,10 +54,11 @@ namespace ExpenseVue.API.Services
                 Date = expense.Date,
                 Vendor = expense.Vendor,
                 CategoryId = expense.CategoryId,
-                CurrencyId = expense.CurrencyId
+                CurrencyId = expense.CurrencyId,
+                UserId = userId
             };
 
-            var addedExpense = await _expenseRepository.AddExpenseAsync(expenseData);
+            var addedExpense = await _expenseRepository.AddExpenseAsync(userId, expenseData);
 
             return new ExpenseModel
             {
@@ -71,7 +72,7 @@ namespace ExpenseVue.API.Services
             };
         }
 
-        public async Task<ExpenseModel> UpdateExpenseAsync(ExpenseModel expense)
+        public async Task<ExpenseModel> UpdateExpenseAsync(string userId, ExpenseModel expense)
         {
             var expenseData = new Expense
             {
@@ -81,10 +82,11 @@ namespace ExpenseVue.API.Services
                 Date = expense.Date,
                 Vendor = expense.Vendor,
                 CategoryId = expense.CategoryId,
-                CurrencyId = expense.CurrencyId
+                CurrencyId = expense.CurrencyId,
+                UserId = userId
             };
 
-            var updatedExpense = await _expenseRepository.UpdateExpenseAsync(expenseData);
+            var updatedExpense = await _expenseRepository.UpdateExpenseAsync(userId, expenseData);
 
             return new ExpenseModel
             {
@@ -98,9 +100,9 @@ namespace ExpenseVue.API.Services
             };
         }
 
-        public async Task DeleteExpenseAsync(int id)
+        public async Task DeleteExpenseAsync(string userId, int id)
         {
-            await _expenseRepository.DeleteExpenseAsync(id);
+            await _expenseRepository.DeleteExpenseAsync(userId, id);
         }
     }
 }

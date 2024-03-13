@@ -1,5 +1,6 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseVue.API.Controllers
@@ -8,6 +9,7 @@ namespace ExpenseVue.API.Controllers
     /// Controller for managing categories.
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase
     {

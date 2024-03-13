@@ -12,38 +12,55 @@ namespace ExpenseVue.API.Repositories
             _context = context;
         }
 
-        public async Task<List<Expense>> GetExpensesAsync()
+        public async Task<List<Expense>> GetExpensesAsync(string userId)
         {
-            return await _context.Expenses.ToListAsync();
+            return await _context.Expenses
+                .Where(e => e.UserId == userId)
+                .ToListAsync();
         }
 
-        public async Task<Expense> GetExpenseAsync(int id)
+        public async Task<Expense> GetExpenseAsync(string userId, int id)
         {
-            return await _context.Expenses.FindAsync(id) ?? throw new Exception("Expense not found.");
+            var expense = await _context.Expenses
+                .Where(e => e.UserId == userId && e.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (expense == null)
+            {
+                throw new Exception("Expense not found.");
+            }
+
+            return expense;
         }
 
-        public async Task<Expense> AddExpenseAsync(Expense expense)
+        public async Task<Expense> AddExpenseAsync(string userId, Expense expense)
         {
+            expense.UserId = userId;
             await _context.Expenses.AddAsync(expense);
             await _context.SaveChangesAsync();
             return expense;
         }
 
-        public async Task<Expense> UpdateExpenseAsync(Expense expense)
+        public async Task<Expense> UpdateExpenseAsync(string userId, Expense expense)
         {
             _context.Entry(expense).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return expense;
         }
 
-        public async Task DeleteExpenseAsync(int id)
+        public async Task DeleteExpenseAsync(string userId, int id)
         {
-            var expense = await _context.Expenses.FindAsync(id);
-            if (expense != null)
+            var expense = await _context.Expenses
+                .Where(e => e.UserId == userId && e.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (expense == null)
             {
-                _context.Expenses.Remove(expense);
-                await _context.SaveChangesAsync();
+                throw new Exception("Expense not found.");
             }
+
+            _context.Expenses.Remove(expense);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,5 +1,7 @@
 using ExpenseVue.API.Models;
 using ExpenseVue.API.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseVue.API.Controllers
@@ -8,21 +10,25 @@ namespace ExpenseVue.API.Controllers
     /// Expense Controller
     /// </summary>
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ExpenseController : ControllerBase
     {
         private readonly IExpenseService _expenseService;
         private readonly ILogger<ExpenseController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="expenseService"></param>
         /// <param name="logger"></param>
-        public ExpenseController(IExpenseService expenseService, ILogger<ExpenseController> logger)
+        /// <param name="userManager"></param>
+        public ExpenseController(IExpenseService expenseService, ILogger<ExpenseController> logger, UserManager<IdentityUser> userManager)
         {
             _expenseService = expenseService;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -34,8 +40,9 @@ namespace ExpenseVue.API.Controllers
         {
             try
             {
-                _logger.LogInformation("Getting list of expenses");
-                var expenses = await _expenseService.GetExpensesAsync();
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"Getting list of expenses for user {userId}");
+                var expenses = await _expenseService.GetExpensesAsync(userId);
                 return Ok(expenses);
             }
             catch (Exception ex)
@@ -55,10 +62,11 @@ namespace ExpenseVue.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Getting expense with ID {id}");
-                var expense = await _expenseService.GetExpenseAsync(id);
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"Getting expense with ID {id} for user {userId}");
+                var expense = await _expenseService.GetExpenseAsync(userId, id);
                 return Ok(expense);
-            }       
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while getting expense with ID {id}");
@@ -76,8 +84,9 @@ namespace ExpenseVue.API.Controllers
         {
             try
             {
-                _logger.LogInformation("Adding a new expense");
-                var addedExpense = await _expenseService.AddExpenseAsync(expense);
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"Adding a new expense for user {userId}");
+                var addedExpense = await _expenseService.AddExpenseAsync(userId, expense);
                 return Ok(addedExpense);
             }
             catch (Exception ex)
@@ -97,8 +106,9 @@ namespace ExpenseVue.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Updating expense with ID {expense.Id}");
-                var updatedExpense = await _expenseService.UpdateExpenseAsync(expense);
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"Updating expense with ID {expense.Id} for user {userId}");
+                var updatedExpense = await _expenseService.UpdateExpenseAsync(userId, expense);
                 return Ok(updatedExpense);
             }
             catch (Exception ex)
@@ -118,8 +128,9 @@ namespace ExpenseVue.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Deleting expense with ID {id}");
-                await _expenseService.DeleteExpenseAsync(id);
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"Deleting expense with ID {id} for user {userId}");
+                await _expenseService.DeleteExpenseAsync(userId, id);
                 return Ok();
             }
             catch (Exception ex)

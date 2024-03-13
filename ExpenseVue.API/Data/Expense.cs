@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace ExpenseVue.API.Data
 {
     public class Expense
@@ -11,5 +13,7 @@ namespace ExpenseVue.API.Data
         public Category? Category { get; set; } // Foreign key for Category
         public int CurrencyId { get; set; }
         public Currency? Currency { get; set; } // Foreign key for Currency
+        public string UserId { get; set; } // Foreign key for User
+        public IdentityUser User { get; set; } // Navigation property for User
     }
 }

@@ -4,10 +4,10 @@ namespace ExpenseVue.API.Repositories
 {
     public interface IExpenseRepository
     {
-        Task<List<Expense>> GetExpensesAsync();
-        Task<Expense> GetExpenseAsync(int id);
-        Task<Expense> AddExpenseAsync(Expense expense);
-        Task<Expense> UpdateExpenseAsync(Expense expense);
-        Task DeleteExpenseAsync(int id);
+        Task<List<Expense>> GetExpensesAsync(string userId);
+        Task<Expense> GetExpenseAsync(string userId, int id);
+        Task<Expense> AddExpenseAsync(string userId, Expense expense);
+        Task<Expense> UpdateExpenseAsync(string userId, Expense expense);
+        Task DeleteExpenseAsync(string userId, int id);
     }
 }
