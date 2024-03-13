@@ -31,21 +31,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
 
 builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                ValidAudience = builder.Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-            };
-        });
+// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//         .AddJwtBearer(options =>
+//         {
+//             options.TokenValidationParameters = new TokenValidationParameters
+//             {
+//                 ValidateIssuer = true,
+//                 ValidateAudience = true,
+//                 ValidateLifetime = true,
+//                 ValidateIssuerSigningKey = true,
+//                 ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//                 ValidAudience = builder.Configuration["Jwt:Audience"],
+//                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//             };
+//         });
 
 builder.Services.AddControllers();
 
@@ -62,8 +64,8 @@ if (app.Environment.IsDevelopment())
 });
 }
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
