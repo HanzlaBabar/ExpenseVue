@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ExpenseVue.API.Models;
-using ExpenseVue.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +23,10 @@ namespace ExpenseVue.API.Controllers
         }
 
         /// <summary>
-        /// Login user.
+        /// Logs in a user and generates a JWT token if successful.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">The login model containing the username and password.</param>
+        /// <returns>Returns an Ok result with the JWT token if successful, otherwise returns Unauthorized.</returns>
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -56,6 +55,11 @@ namespace ExpenseVue.API.Controllers
             return Unauthorized();
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="model">The registration model containing the username, email, and password.</param>
+        /// <returns>Returns an Ok result with a success message if registration is successful, otherwise returns BadRequest with errors.</returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
