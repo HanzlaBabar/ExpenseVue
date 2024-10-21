@@ -413,3 +413,13 @@ WHERE "e"."UserId" = @__userId_0
 2024-03-13 16:42:35.581 +00:00 [INF] Executed action ExpenseVue.API.Controllers.ExpenseController.GetExpensesAsync (ExpenseVue.API) in 108.2534ms
 2024-03-13 16:42:35.582 +00:00 [INF] Executed endpoint 'ExpenseVue.API.Controllers.ExpenseController.GetExpensesAsync (ExpenseVue.API)'
 2024-03-13 16:42:35.582 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/api/Expense - 200 null application/json; charset=utf-8 199.7703ms
+2024-03-13 17:07:19.648 +00:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-03-13 17:07:20.081 +00:00 [INF] Now listening on: https://localhost:7038
+2024-03-13 17:07:20.081 +00:00 [INF] Now listening on: http://localhost:5251
+2024-03-13 17:07:20.096 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-03-13 17:07:20.097 +00:00 [INF] Hosting environment: Development
+2024-03-13 17:07:20.097 +00:00 [INF] Content root path: D:\Personal\ExpenseVue\ExpenseVue.API
+2024-03-13 17:07:20.421 +00:00 [INF] Request starting HTTP/1.1 GET https://localhost:7038/swagger/index.html - null null
+2024-03-13 17:07:20.653 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/swagger/index.html - 200 null text/html;charset=utf-8 228.0492ms
+2024-03-13 17:07:20.878 +00:00 [INF] Request starting HTTP/1.1 GET https://localhost:7038/swagger/v1/swagger.json - null null
+2024-03-13 17:07:21.079 +00:00 [INF] Request finished HTTP/1.1 GET https://localhost:7038/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 201.4215ms
